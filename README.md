@@ -256,6 +256,9 @@ ok -25770 = -25770
 
 ## Section Two: Using a Framework
 
+## Section Three: Handling Errors
+
+## Section Four: Test Setup and Cleanup
 
 # References
 
