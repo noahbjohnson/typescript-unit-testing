@@ -429,11 +429,89 @@ Tests:       1 passed, 1 total
 
 ## Section Three: An Absolute Unit (Test)
 
-## Section Three: Coverage
+The exercises with doubleMe introduced the basic frameworks and concepts of Typescript testing in the jest environment. But we're using the most basic type of testing, especially for a function, absolute equality cases.
 
-## Section Four: Handling Errors
+There are two general types of test _assertions_, or logical propositions that evaluate to a boolean. 
 
-## Section Five: Test Setup and Cleanup
+- Absolute Assertions
+    - Exactly defined input and output values
+    - Implemented with statements like: 'is', 'toBe', '==='
+    - Good for covering rare outcomes, or _edge cases_
+    - Rigid, but best for black-box use cases or mathematical operations
+- Relative Assertions
+    - More vaguely defined and flexible 
+    - Less likely to detect edge case failure
+    - Easier to maintain
+
+So far, all our tests have been expecting an output for a given input, absolute. This is an important type of unit test for simple components, but far from the only one in our toolbox. In more complex code, a developer can't possibly write enough tests exclusively with absolute assertions. This is when we must start to rely on more relative, dynamic measures than our doubleMe tests.
+
+### A Better Subject
+
+I think it's fair to say that doubleMe has outgrown its usefulness. We need a component with more complexity, and handling API calls is a great example use case. The rest of the guide will center around creating a consumer component for the [Star Trek API](https://stapi.co).
+
+> You don't have to know anything about star trek, they just have a free api and a high rate limit
+
+Let's start off by copying the folder from the previous session and naming the copy folder `three`.
+
+Now delete the entire contents of the `src/index.ts` and `src/index.test.ts` files.
+
+### Tests (and Types) First
+
+Now that we're progressing to a more realistic use case for unit testing, we should strive for test-first, or test-driven, development. This test-first mentality is a perfect pairing with Typescript, which provides static checking while you code, and encourages defining data types and properties before they're constructed.
+
+**Step One: Define the purpose of the unit**
+The unit will take a name and return how many characters in Star Trek have that name.
+
+**Step Two: Define the unit api (params and return values) and create a mock function**
+In our `src/index.ts` we can add the following type:
+```ts
+type nameSearch = (nameString: string) => number
+
+export const nameSearcher: nameSearch = (nameString) => {
+  console.log(`Input: ${JSON.stringify(nameString)}`)
+  return 0
+}
+```
+
+**Step Three: Define edge cases and write tests for them**
+- Empty strings
+- Strings longer than 64 characters
+- Client is offline
+- There are more than one page worth of results
+- Illegal character in the string
+
+Here is how we would start writing this out in `src/index.test.ts`:
+```
+describe('test Star Trek name search', ()=>{
+  test.todo('handle empty strings')
+  test.todo('handle long strings >64')
+  test.todo('handle offline status')
+  test.todo('handle too many results')
+  test.todo('handle illegal characters')
+})
+```
+
+These todos let us outline what our test cases look like without getting bogged down with details right away. Running `npm t` now won't cause any errors:
+```
+$ npm t
+ PASS  src/index.test.ts
+  test Star Trek name search
+    ✎ todo handle empty strings
+    ✎ todo handle long strings >64
+    ✎ todo handle offline status
+    ✎ todo handle too many results
+    ✎ todo handle illegal characters
+```
+
+### To Throw or Not to Throw
+
+Now that the first batch of tests is outlined, we need to decide how we're handling their logic in our component. 
+
+## Section Four: Coverage
+
+## Section Five: Handling Errors
+
+## Section Six: Test Setup and Cleanup
 
 # References
 
